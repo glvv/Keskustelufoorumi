@@ -17,30 +17,30 @@ CREATE TABLE Group_Member(
 );
 
 CREATE TABLE Topic(
-  topic_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   title varchar(120) NOT NULL,
   forum_group_id INTEGER REFERENCES Forum_Group(id)
 );
 
 CREATE TABLE Forum_Message(
-  message_id SERIAL PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   author INTEGER REFERENCES Forum_User(id),
   posted TIMESTAMP NOT NULL,
-  message varchar(120) NOT NULL,
-  topic_id INTEGER REFERENCES Topic(topic_id) NOT NULL
-)
+  message varchar(2000) NOT NULL,
+  topic_id INTEGER REFERENCES Topic(id) NOT NULL
+);
 
 CREATE TABLE Has_Read(
-  message_id INTEGER REFERENCES Forum_Message(message_id),
+  message_id INTEGER REFERENCES Forum_Message(id),
   user_id INTEGER REFERENCES Forum_User(id)
 );
 
 CREATE TABLE Tag(
   id SERIAL PRIMARY KEY,
-  tag_name varchar(120) UNIQUE NOT NULL
-)
+  name varchar(120) UNIQUE NOT NULL
+);
 
 CREATE TABLE Tagged(
   tag_id INTEGER REFERENCES Tag(id),
-  topic_id INTEGER REFERENCES Topic(topic_id)
-)
+  topic_id INTEGER REFERENCES Topic(id)
+);
