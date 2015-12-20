@@ -1,9 +1,25 @@
 <?php
 
   $routes->get('/', function() {
-    HelloWorldController::index();
+    ForumController::index();
   });
-
-  $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
+  
+  $routes->get('/groups', function() {
+    ForumController::groups();
+  });
+  
+  $routes->get('/topics', function() {
+    ForumController::topics();
+  });
+  
+  $routes->get('/newmessage', function() {
+    ForumController::newmessage();
+  });
+  
+    $routes->get('/editmessage', function() {
+    ForumController::editmessage();
+  });
+  
+    $routes->get('/viewtopic', function() {
+    ForumController::topicview();
   });

@@ -3,7 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](http://raot.users.cs.helsinki.fi/foorumi/)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki dokumentaatiooni](https://github.com/glvv/Keskustelufoorumi/blob/master/doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
