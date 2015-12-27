@@ -10,8 +10,8 @@ class Has_Read extends BaseModel {
 
     public function save() {
         if (!$this->checkIfExists()) {
-            $query = DB::connection()->prepare('INSERT INTO Has_Read (message_id, user_id) VALUES (:message_id, :user_id) RETURNING id');
-            $query->execute(array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id));
+            $query = DB::connection()->prepare('INSERT INTO Has_Read (message_id, user_id) VALUES (:message_id, :user_id)');
+            $query->execute(array('message_id' => $this->message_id, 'user_id' => $this->user_id));
         }
     }
 
@@ -20,9 +20,9 @@ class Has_Read extends BaseModel {
         $query->execute(array('message_id' => $this->message_id, 'user_id' => $this->user_id));
         $row = $query->fetch();
         if ($row) {
-            return FALSE;
-        } else {
             return TRUE;
+        } else {
+            return FALSE;
         }
     }
 

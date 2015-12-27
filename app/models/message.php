@@ -14,7 +14,7 @@ class Message extends BaseModel {
         $rows = $query->fetchAll();
         $users = array();
         foreach ($rows as $row) {
-            $users[] = $this->createUserFromResult($row);
+            $users[] = Message::createUserFromResult($row);
         }
         return $users;
     }
@@ -27,10 +27,11 @@ class Message extends BaseModel {
     }
 
     private static function createNewMessageFromResult($row) {
-        $usersWhoHaveReadTheMessage = $this->findUsersWhoHaveReadTheMessage($row['id']);
+        $usersWhoHaveReadTheMessage = Message::findUsersWhoHaveReadTheMessage($row['id']);
+        $author = User::findByID($row['author']);
         return new Message(array(
             'id' => $row['id'],
-            'author' => $row['author'],
+            'author' => $author,
             'posted' => $row['posted'],
             'message' => $row['message'],
             'topic_id' => $row['topic_id'],
@@ -44,7 +45,7 @@ class Message extends BaseModel {
         $rows = $query->fetchAll();
         $messages = array();
         foreach ($rows as $row) {
-            $messages[] = $this->createNewMessageFromResult($row);
+            $messages[] = Message::createNewMessageFromResult($row);
         }
         return $messages;
     }
@@ -53,7 +54,7 @@ class Message extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Forum_Message WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
-        return $this->createNewMessageFromResult($row);
+        return Message::createNewMessageFromResult($row);
     }
 
     public static function findByTopicId($id) {
@@ -62,13 +63,13 @@ class Message extends BaseModel {
         $rows = $query->fetchAll();
         $messages = array();
         foreach ($rows as $row) {
-            $messages[] = $this->createNewMessageFromResult($row);
+            $messages[] = Message::createNewMessageFromResult($row);
         }
         return $messages;
     }
     
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO MESSAGE (author, posted, message, topic_id) VALUES (:author, NOW(), :message, :topic_id) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO Forum_Message (author, posted, message, topic_id) VALUES (:author, NOW(), :message, :topic_id) RETURNING id');
         $query->execute(array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id));
         $row = $query->fetch();
         $this->id = $row['id'];    
