@@ -67,15 +67,11 @@ class Message extends BaseModel {
         return $messages;
     }
     
-
-    
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO MESSAGE (author, posted, message, topic_id) VALUES (:author, NOW(), :message, :topic_id) RETURNING id');
         $query->execute(array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id));
         $row = $query->fetch();
-        $this->id = $row['id'];
-        
-        
+        $this->id = $row['id'];    
     }
     
     

@@ -2,26 +2,16 @@
 
 class ForumController extends BaseController {
 
-    public static function index() {
-        View::make('frontpage.html');
-    }
-
-    public static function newmessage() {
-        View::make('newmessage.html');
-    }
-
-    public static function editmessage() {
-        View::make('editmessage.html');
-    }
-
-    public static function topicview() {
-        View::make('topicview.html');
+    public static function login() {
+        View::make('login.html');
     }
 
     public static function groups() {
-        View::make('grouplist.html');
+        $user_id = $_SESSION['user'];
+        $groups = Group_Member::findGroupByUserId($user_id);
+        View::make('groups.html', array('groups' => $groups));
     }
-
+    
     public static function topics() {
         View::make('topiclist.html');
     }

@@ -1,25 +1,25 @@
 <?php
 
-  $routes->get('/', function() {
-    ForumController::index();
-  });
-  
-  $routes->get('/groups', function() {
+$routes->get('/', function() {
     ForumController::groups();
-  });
-  
-  $routes->get('/topics', function() {
-    ForumController::topics();
-  });
-  
-  $routes->get('/newmessage', function() {
-    ForumController::newmessage();
-  });
-  
-    $routes->get('/editmessage', function() {
-    ForumController::editmessage();
-  });
-  
-    $routes->get('/viewtopic', function() {
-    ForumController::topicview();
-  });
+});
+
+$routes->get('/login', function() {
+    ForumController::login();
+});
+
+$routes->get('/:group_id', function($group_id) {
+    ForumController::topics($group_id);
+});
+
+$routes->get('/:group_id/new', function($group_id) {
+    ForumController::newgroup($group_id);
+});
+
+$routes->get('/:group_id/:topic_id', function($group_id, $topic_id) {
+    ForumController::topic($group_id, $topic_id);
+});
+
+$routes->get('/:group_id/:topic_id/new', function($group_id, $topic_id) {
+    ForumController::newtopic($group_id, $topic_id);
+});
