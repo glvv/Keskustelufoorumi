@@ -2,21 +2,10 @@
 
 class Message extends BaseModel {
 
-    public $id, $author, $posted, $message, $topic_id, $read_users;
+    public $id, $author, $posted, $message, $topic_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-    }
-
-    private static function findUsersWhoHaveReadTheMessage($id) {
-        $query = DB::connection()->prepare('SELECT Forum_User.id, Forum_User.name FROM Forum_User INNER JOIN Has_Read ON Forum_User.id = Has_Read.user_id WHERE message_id = :id');
-        $query->execute(array('id' => $id));
-        $rows = $query->fetchAll();
-        $users = array();
-        foreach ($rows as $row) {
-            $users[] = $this->createUserFromResult($row);
-        }
-        return $users;
     }
 
     private static function createUserFromResult($row) {
@@ -27,14 +16,12 @@ class Message extends BaseModel {
     }
 
     private static function createNewMessageFromResult($row) {
-        $usersWhoHaveReadTheMessage = $this->findUsersWhoHaveReadTheMessage($row['id']);
         return new Message(array(
             'id' => $row['id'],
             'author' => $row['author'],
             'posted' => $row['posted'],
             'message' => $row['message'],
-            'topic_id' => $row['topic_id'],
-            'read_users' => $usersWhoHaveReadTheMessage
+            'topic_id' => $row['topic_id']
         ));
     }
 

@@ -26,7 +26,7 @@ CREATE TABLE Forum_Message(
   id SERIAL PRIMARY KEY,
   author INTEGER REFERENCES Forum_User(id),
   posted TIMESTAMP NOT NULL,
-  message varchar(1500) NOT NULL,
+  message varchar(2000) NOT NULL,
   topic_id INTEGER REFERENCES Topic(id) NOT NULL
 );
 

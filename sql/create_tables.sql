@@ -29,18 +29,3 @@ CREATE TABLE Forum_Message(
   message varchar(2000) NOT NULL,
   topic_id INTEGER REFERENCES Topic(id) NOT NULL
 );
-
-CREATE TABLE Has_Read(
-  message_id INTEGER REFERENCES Forum_Message(id),
-  user_id INTEGER REFERENCES Forum_User(id)
-);
-
-CREATE TABLE Tag(
-  id SERIAL PRIMARY KEY,
-  name varchar(120) UNIQUE NOT NULL
-);
-
-CREATE TABLE Tagged(
-  tag_id INTEGER REFERENCES Tag(id),
-  topic_id INTEGER REFERENCES Topic(id)
-);
