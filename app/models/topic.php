@@ -17,9 +17,7 @@ class Topic extends BaseModel {
     }
     
     public static function findByGroupId($group_id) {
-        $query = DB::connection()->prepare('SELECT * FROM Topic WHERE forum_group_id = :group_id');
-        $query->execute(array('group_id' => $group_id));
-        $rows = $query->fetchAll();
+        $rows = parent::queryWithParameters('SELECT * FROM Topic WHERE forum_group_id = :group_id', array('group_id' => $group_id));
         $topics = array();
         foreach ($rows as $row) {
             $topics[] = Topic::createNewTopicFromResult($row);
@@ -28,10 +26,7 @@ class Topic extends BaseModel {
     }
     
     public static function findById($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Topic WHERE id = :id LIMIT 1');
-        $query->execute(array('id' => $id));
-        $row = $query->fetch();
-        return Topic::createNewTopicFromResult($row);
+        return Topic::createNewTopicFromResult(parent::queryWithParametersLimit1('SELECT * FROM Topic WHERE id = :id LIMIT 1', array('id' => $id)));
     }
 
 }

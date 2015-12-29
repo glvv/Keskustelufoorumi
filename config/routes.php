@@ -12,12 +12,16 @@ $routes->post('/login', function() {
     UserController::handleLogin();
 });
 
-$routes->get('/groups/:group_id', function($group_id) {
-    ForumController::topics($group_id);
+$routes->post('/logout', function() {
+    UserController::logout();
 });
 
 $routes->get('/groups/new', function($group_id) {
     ForumController::newGroup($group_id);
+});
+
+$routes->get('/groups/:group_id', function($group_id) {
+    ForumController::topics($group_id);
 });
 
 $routes->get('/topics/:topic_id', function($topic_id) {

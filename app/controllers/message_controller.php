@@ -3,6 +3,7 @@
 class MessageController extends BaseController {
 
     public static function store($topic_id) {
+        self::checkLoggedIn();
         $user_id = $_SESSION['user'];
         $params = $_POST;
         $message = new Message(array(
@@ -20,11 +21,13 @@ class MessageController extends BaseController {
     }
     
     public static function edit($id) {
+        self::checkLoggedIn();
         $message = Message::findById($id);
         View::make('editmessage.html', array('message' => $message));
     }
     
     public static function update($id) {
+        self::checkLoggedIn();
         
     }
     

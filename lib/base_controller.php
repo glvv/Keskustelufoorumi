@@ -16,5 +16,20 @@ class BaseController {
             Redirect::to('/login', array('message' => 'Kirjaudu ensin sisään!'));
         }
     }
-
+    
+    public static function verifyMembership($forum_group_id) {
+        $user_id = $_SESSION['user'];
+        if (!Group_Member::verifyMembership($user_id, $forum_group_id)) {
+            Redirect::to('/', array('message' => 'Et ole ryhmän jäsen!'));
+        }
+    }
+    
+    public static function verifyMembershipByTopicId($topic_id) {
+        $forum_group_id = Topic::findById($topic_id)->forum_group_id;
+        $user_id = $_SESSION['user'];
+        if (!Group_Member::verifyMembership($user_id, $forum_group_id)) {
+            Redirect::to('/', array('message' => 'Et ole ryhmän jäsen!'));
+        }
+    }
+    
 }
