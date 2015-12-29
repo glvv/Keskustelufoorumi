@@ -6,13 +6,7 @@ class Message extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-    }
-
-    private static function createUserFromResult($row) {
-        return new User(array(
-            'id' => $row['id'],
-            'name' => $row['name']
-        ));
+        $this->validators = array('validateMessage');
     }
 
     private static function createNewMessageFromResult($row) {
@@ -27,9 +21,7 @@ class Message extends BaseModel {
     }
 
     public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Forum_Message ORDER BY posted');
-        $query->execute();
-        $rows = $query->fetchAll();
+        $rows = parent::queryWithoutParameters('SELECT * FROM Forum_Message ORDER BY posted');
         $messages = array();
         foreach ($rows as $row) {
             $messages[] = Message::createNewMessageFromResult($row);
@@ -38,16 +30,12 @@ class Message extends BaseModel {
     }
 
     public static function findById($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Forum_Message WHERE id = :id LIMIT 1');
-        $query->execute(array('id' => $id));
-        $row = $query->fetch();
+        $row = parent::queryWithParametersLimit1('SELECT * FROM Forum_Message WHERE id = :id LIMIT 1', array('id' => $id));
         return Message::createNewMessageFromResult($row);
     }
 
     public static function findByTopicId($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Forum_Message WHERE topic_id = :id ORDER BY posted');
-        $query->execute(array('id' => $id));
-        $rows = $query->fetchAll();
+        $rows = parent::queryWithParameters('SELECT * FROM Forum_Message WHERE topic_id = :id ORDER BY posted', array('id' => $id));
         $messages = array();
         foreach ($rows as $row) {
             $messages[] = Message::createNewMessageFromResult($row);
@@ -56,12 +44,18 @@ class Message extends BaseModel {
     }
     
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Forum_Message (author, posted, message, topic_id) VALUES (:author, NOW(), :message, :topic_id) RETURNING id');
-        $query->execute(array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id));
-        $row = $query->fetch();
+        $parameters = array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id);
+        $query = 'INSERT INTO Forum_Message (author, posted, message, topic_id) VALUES (:author, NOW(), :message, :topic_id) RETURNING id';
+        $row = parent::queryWithParametersLimit1($query, $parameters);
         $this->id = $row['id'];    
     }
     
+    public function validateMessage() {
+        $errors = array();
+        if ($this->message  == '' || $this->message == NULL) {
+            $errors[] = 'Viesti ei saa olla tyhjä';
+        }
+        return $errors;
+    }
     
-
 }

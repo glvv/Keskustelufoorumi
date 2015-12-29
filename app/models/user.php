@@ -18,14 +18,13 @@ class User extends BaseModel {
     }
 
     public static function findByID($id) {
-        $rows = parent::queryWithParameters('SELECT * FROM Forum_User WHERE id = :id', array('id' => $id));
-        return User::createUserFromResult($rows[0]);
+        return User::createUserFromResult(parent::queryWithParametersLimit1('SELECT * FROM Forum_User WHERE id = :id', array('id' => $id)));
     }
 
     public static function authenticate($name, $password) {
-        $rows = parent::queryWithParameters('SELECT * FROM Forum_User WHERE name = :name AND password = :password LIMIT 1', array('name' => $name, 'password' => $password));
-        if ($rows[0]) {
-            return User::createUserFromResult($rows[0]);
+        $row = parent::queryWithParametersLimit1('SELECT * FROM Forum_User WHERE name = :name AND password = :password LIMIT 1', array('name' => $name, 'password' => $password));
+        if ($row) {
+            return User::createUserFromResult($row);
         } else {
             return NULL;
         }
@@ -41,7 +40,10 @@ class User extends BaseModel {
     }
     
     public function save() {
-        
+        $parameters = array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id);
+        $query = 'INSERT INTO Forum_User (name, password, admin) VALUES (:name, :password, :admin) RETURNING id';
+        $row = parent::queryWithParametersLimit1($query, $parameters);
+        $this->id = $row['id'];
     }
 
 }
