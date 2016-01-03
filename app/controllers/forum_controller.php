@@ -23,5 +23,7 @@ class ForumController extends BaseController {
         $topic = Topic::findById($topic_id);
         View::make('topic.html', array('messages' => $messages, 'topic' => $topic));
     }
+    
+
 
 }

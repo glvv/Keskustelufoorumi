@@ -42,20 +42,34 @@ class Message extends BaseModel {
         }
         return $messages;
     }
-    
+
     public function save() {
         $parameters = array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id);
         $query = 'INSERT INTO Forum_Message (author, posted, message, topic_id) VALUES (:author, NOW(), :message, :topic_id) RETURNING id';
         $row = parent::queryWithParametersLimit1($query, $parameters);
-        $this->id = $row['id'];    
+        $this->id = $row['id'];
+    }
+
+    public function update() {
+        $parameters = array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id, 'id' => $this->id);
+        $query = 'UPDATE Forum_Message SET author = :author, posted = :posted, message = :message, topic_id = :topic_id WHERE id = :id';
+        parent::queryWithParameters($query, $parameters);
     }
     
+    public static function delete($id) {
+        $parameters = array('id' => $id);
+        $query = 'DELETE FROM Forum_Message WHERE id = :id';
+        parent::queryWithParameters($query, $parameters);
+    }
+
     public function validateMessage() {
         $errors = array();
-        if ($this->message  == '' || $this->message == NULL) {
+        if ($this->message == '' || $this->message == NULL) {
             $errors[] = 'Viesti ei saa olla tyhjä';
         }
         return $errors;
     }
     
+    
+
 }

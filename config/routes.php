@@ -31,3 +31,15 @@ $routes->get('/topics/:topic_id', function($topic_id) {
 $routes->post('/topics/:topic_id/', function($topic_id) {
     MessageController::store($topic_id);
 });
+
+$routes->get('/topics/:topic_id/:message_id/edit', function($topic_id, $message_id) {
+    MessageController::edit($message_id, $topic_id);
+});
+
+$routes->post('/topics/:topic_id/:message_id/edit', function($topic_id, $message_id) {
+    MessageController::update($message_id, $topic_id);
+});
+
+$routes->post('/topics/:topic_id/:message_id/delete', function($topic_id, $message_id) {
+    MessageController::delete($message_id, $topic_id);
+});
