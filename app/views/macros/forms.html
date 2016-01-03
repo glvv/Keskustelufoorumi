@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 {% macro destroy_button(action, text) %}
-  <form method="post" action="{{action}}" style="display: inline-block;">
+<form method="post" action="{{action}}" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">{{text|default('Poista')}}</button>
-  </form>
+</form>
 {% endmacro %}
 
-{% macro edit_button(action, text) %}
-  <form method="post" action="{{action}}" style="display: inline-block;">
-    <button type="submit" class="btn btn-danger">{{text|default('Poista')}}</button>
-  </form>
+{% macro edit_button(url, text) %}
+<a class="btn btn-default" href="{{url}}" role="button">{{text|default('Muokkaa')}}</a>
 {% endmacro %}

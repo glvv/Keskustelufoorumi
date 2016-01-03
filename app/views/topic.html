@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 <h1>{{topic.title}}</h1>
 <table class="table table-striped table-bordered">
     <tbody>
@@ -9,8 +10,8 @@
             <td>{{message.posted}}</td>
             <td>{{message.message}}</td>
             <th>
-                <a class="btn btn-default btn-sm" href="#">Muokkaa</a>
-                <a class="btn btn-danger btn-sm" href="#">Poista</a>
+                {{forms.edit_button("#{base_path}/topics/#{topic.id}/#{message.id}/edit")}}
+                {{forms.destroy_button("#{base_path}/topics/#{topic.id}/#{message.id}/delete")}}
             </th>
         </tr>
         {% endfor %}
