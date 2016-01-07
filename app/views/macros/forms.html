@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 {% macro destroy_button(action, text) %}
-  <form method="post" action="{{action}}" style="display: inline-block;">
+<form method="post" action="{{action}}" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">{{text|default('Poista')}}</button>
-  </form>
+</form>
 {% endmacro %}
 
 {% macro edit_button(action, text) %}
-  <form method="post" action="{{action}}" style="display: inline-block;">
+<form method="post" action="{{action}}" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">{{text|default('Poista')}}</button>
-  </form>
+</form>
+{% endmacro %}
+
+{% macro username_and_password_field(action, action_text) %}
+<form method="post" action="{{action}}">
+    <div class="form-group">
+        <label>Käyttäjätunnus</label>
+        <input class="form-control" name="username" value="{{username}}" type="text">
+    </div>
+    <div class="form-group">
+        <label>Salasana</label>
+        <input class="form-control" name="password" type="password">
+    </div>
+    <button type="submit" class="btn btn-primary">{{action_text}}</button>
+</form>
 {% endmacro %}

@@ -53,7 +53,5 @@ class MessageController extends BaseController {
         self::checkLoggedIn();
         self::verifyMembershipByTopicId($topic_id);
         MessageController::delete($id);
-        
-    }
-    
+    }    
 }
