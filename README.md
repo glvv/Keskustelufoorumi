@@ -3,6 +3,7 @@
 Yleisiä linkkejä:
 
 * [Etusivu](http://raot.users.cs.helsinki.fi/foorumi/)
+* [Käyttöohje](https://github.com/glvv/Keskustelufoorumi/blob/master/doc/Käyttöohje.pdf)
 
 
 ## Työn aihe

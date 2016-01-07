@@ -12,8 +12,9 @@ class ForumController extends BaseController {
     public static function topics($group_id) {
         self::checkLoggedIn();
         self::verifyMembership($group_id);
+        $group = Group::findByID($group_id);
         $topics = Topic::findByGroupId($group_id);
-        View::make('topics.html', array('topics' => $topics));
+        View::make('topics.html', array('topics' => $topics, 'group' => $group));
     }
     
     public static function topic($topic_id) {
@@ -24,6 +25,4 @@ class ForumController extends BaseController {
         View::make('topic.html', array('messages' => $messages, 'topic' => $topic));
     }
     
-
-
 }

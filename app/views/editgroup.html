@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="post" action="{{base_path}}/groups/{{group.id}}/edit">
+    <div class="form-group">
+        <input type="text" name="name" placeholder="Ryhmän nimi" class="form-control">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Muokkaa ryhmää</button>
+    </div>
+</form>
+
+{% endblock %}

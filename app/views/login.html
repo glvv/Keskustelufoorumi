@@ -1,20 +1,16 @@
 {% extends "base.html"%}
 {% block content%}
+{% import "macros/forms.html" as forms %}
 <h1>Kirjaudu sisään</h1>
 {% if error %}
 <div class="alert alert-danger">
     <p>{{error}}</p>
 </div>
 {% endif %}
-<form method="post" action="{{base_path}}/login">
-    <div class="form-group">
-        <label>Käyttäjätunnus</label>
-        <input class="form-control" name="username" value="{{username}}" type="text">
-    </div>
-    <div class="form-group">
-        <label>Salasana</label>
-        <input class="form-control" name="password" type="password">
-    </div>
-    <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
-</form>
+{% if message %}
+<div class="alert alert-success">
+    <p>{{message}}</p>
+</div>
+{% endif %}
+{{forms.username_and_password_field("#{base_path}/login", "Kirjaudu sisään")}}
 {% endblock %}

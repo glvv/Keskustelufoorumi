@@ -5,13 +5,7 @@
 </form>
 {% endmacro %}
 
-{% macro edit_button(action, text) %}
-<form method="post" action="{{action}}" style="display: inline-block;">
-    <button type="submit" class="btn btn-danger">{{text|default('Poista')}}</button>
-</form>
-{% endmacro %}
-
-{% macro username_and_password_field(action, action_text) %}
+{% macro username_and_password_field(action, button_text) %}
 <form method="post" action="{{action}}">
     <div class="form-group">
         <label>Käyttäjätunnus</label>
@@ -21,6 +15,11 @@
         <label>Salasana</label>
         <input class="form-control" name="password" type="password">
     </div>
-    <button type="submit" class="btn btn-primary">{{action_text}}</button>
+    <button type="submit" class="btn btn-primary">{{button_text}}</button>
 </form>
 {% endmacro %}
+
+{% macro edit_button(url, text) %}
+<a class="btn btn-default" href="{{url}}" role="button">{{text|default('Muokkaa')}}</a>
+{% endmacro %}
+

@@ -52,6 +52,8 @@ class MessageController extends BaseController {
     public static function delete($id, $topic_id) {
         self::checkLoggedIn();
         self::verifyMembershipByTopicId($topic_id);
-        MessageController::delete($id);
-    }    
+        Message::delete($id);
+        Redirect::to('/topics/' . $topic_id);
+    }
+    
 }

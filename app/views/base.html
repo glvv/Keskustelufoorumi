@@ -39,7 +39,6 @@
                 <div class="collapse navbar-collapse" id="navigation">
                     <ul class="nav navbar-nav">
                         <!-- Navigaation linkit -->
-                        <li><a href="{{base_path}}">Etusivu</a></li>
                         <li><a href="{{base_path}}">Ryhmät</a></li>
                         {% if user_logged_in %}
                         <li>
@@ -49,6 +48,7 @@
                         </li>
                         {% else %}
                             <li><a href="{{base_path}}/login">Kirjaudu sisään</a></li>
+                            <li><a href="{{base_path}}/register">Rekisteröidy</a></li>
                         {% endif %}
                     </ul>
                 </div>

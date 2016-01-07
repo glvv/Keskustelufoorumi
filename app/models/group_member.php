@@ -20,8 +20,8 @@ class Group_Member extends BaseModel {
         return $groups;
     }
     
-    public function save() {
-        $parameters = array('user_id' => $this->user_id, 'forum_group_id' => $this->forum_group_id);
+    public static function addUserToGroup($user_id, $forum_group_id) {
+        $parameters = array('user_id' => $user_id, 'forum_group_id' => $forum_group_id);
         $sql = 'INSERT INTO Group_Member (user_id, forum_group_id) VALUES (:user_id, :forum_group_id)';
         $query = DB::connection()->prepare($sql);
         $query->execute($parameters);

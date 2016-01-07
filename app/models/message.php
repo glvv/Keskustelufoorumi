@@ -51,7 +51,7 @@ class Message extends BaseModel {
     }
 
     public function update() {
-        $parameters = array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id, 'id' => $this->id);
+        $parameters = array('author' => $this->author, 'message' => $this->message, 'topic_id' => $this->topic_id, 'id' => $this->id, 'posted' => $this->posted);
         $query = 'UPDATE Forum_Message SET author = :author, posted = :posted, message = :message, topic_id = :topic_id WHERE id = :id';
         parent::queryWithParameters($query, $parameters);
     }
@@ -66,10 +66,10 @@ class Message extends BaseModel {
         $errors = array();
         if ($this->message == '' || $this->message == NULL) {
             $errors[] = 'Viesti ei saa olla tyhjä';
+        } else if (strlen($this->message) > 2000) {
+            $errors[] = 'Viesti on liian pitkä, maksimipituus on 2000 merkkiä';
         }
         return $errors;
     }
     
-    
-
 }
