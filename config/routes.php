@@ -37,7 +37,23 @@ $routes->get('/groups/:group_id', function($group_id) {
 });
 
 $routes->get('/groups/:group_id/edit', function($group_id) {
-    TopicController::edit($group_id);
+    GroupController::edit($group_id);
+});
+
+$routes->post('/groups/:group_id/edit', function($group_id) {
+    GroupController::update($group_id);
+});
+
+$routes->post('/groups/:group_id/expel/:user_id', function($group_id, $user_id) {
+    GroupController::expel($group_id, $user_id);
+});
+
+$routes->post('/groups/:group_id/invite', function($group_id) {
+    GroupController::invite($group_id);
+});
+
+$routes->get('/groups/:group_id/delete', function($group_id) {
+    GroupController::delete($group_id);
 });
 
 $routes->get('/topics/:topic_id', function($topic_id) {

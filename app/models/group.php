@@ -33,5 +33,11 @@ class Group extends BaseModel {
             'name' => $row['name']
         ));
     }
+    
+    public function update() {
+        $parameters = array('id' => $this->id, 'name' => $this->name);
+        $query = 'UPDATE Forum_Group SET name = :name WHERE id = :id';
+        parent::queryWithParameters($query, $parameters);
+    }
 
 }

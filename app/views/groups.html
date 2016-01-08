@@ -2,20 +2,6 @@
 {% import "macros/forms.html" as forms %}
 {% block content %}
 
-{% if message %}
-<div class="alert alert-success">
-    <p>{{message}}</p>
-</div>
-{% endif %}
-
-{% if errors %}
-<div class="alert alert-danger">
-    {% for error in errors %}
-    <p>{{error}}</p>
-    {% endfor %}
-</div>
-{% endif %}
-
 <form method="post" action="{{base_path}}/groups/new">
     <div class="form-group">
         <input type="text" name="name" placeholder="Ryhmän nimi" class="form-control">
@@ -40,12 +26,11 @@
                 <a href="{{base_path}}/groups/{{group.id}}">{{group.name}}</a>
             </td>
             <th>
-                <a class="btn btn-default btn-sm" href="#">Muokkaa</a>
-                <a class="btn btn-danger btn-sm" href="#">Poista</a>
+                {{forms.edit_button("#{base_path}/groups/#{group.id}/edit")}}
+                {{forms.destroy_button("#{base_path}/groups/#{group.id}/delete")}}
             </th>
         </tr>
         {% endfor %}
-
     </tbody>
 </table>
 {% else %}

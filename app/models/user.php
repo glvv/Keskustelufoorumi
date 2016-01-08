@@ -22,6 +22,10 @@ class User extends BaseModel {
         return User::createUserFromResult(parent::queryWithParametersLimit1('SELECT * FROM Forum_User WHERE id = :id', array('id' => $id)));
     }
     
+    public static function findByName($name) {
+        return User::createUserFromResult(parent::queryWithParametersLimit1('SELECT * FROM Forum_User WHERE name = :name', array('name' => $name)));
+    }
+    
     private static function checkNameAvailability($name) {
         if (parent::queryWithParametersLimit1('SELECT * FROM Forum_User WHERE name = :name', array('name' => $name))) {
             return false;

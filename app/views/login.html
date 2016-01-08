@@ -2,15 +2,5 @@
 {% block content%}
 {% import "macros/forms.html" as forms %}
 <h1>Kirjaudu sisään</h1>
-{% if error %}
-<div class="alert alert-danger">
-    <p>{{error}}</p>
-</div>
-{% endif %}
-{% if message %}
-<div class="alert alert-success">
-    <p>{{message}}</p>
-</div>
-{% endif %}
 {{forms.username_and_password_field("#{base_path}/login", "Kirjaudu sisään")}}
 {% endblock %}
