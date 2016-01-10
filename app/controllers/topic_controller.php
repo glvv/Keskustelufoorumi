@@ -4,10 +4,12 @@ class TopicController extends BaseController {
 
     public static function store($group_id) {
         self::checkLoggedIn();
+        $user = self::getUserLoggedIn();
         $params = $_POST;
         $topic = new Topic(array(
             'title' => $params['title'],
-            'forum_group_id' => $group_id
+            'forum_group_id' => $group_id,
+            'creator' => $user->id
         ));
         $errors = $topic->errors();
         $message;

@@ -23,14 +23,14 @@ class MessageController extends BaseController {
     
     public static function edit($id, $topic_id) {
         self::checkLoggedIn();
-        self::verifyMembershipByTopicId($topic_id);
+        self::verifyRightsforDeletingOrEditingMessage($id);
         $message = Message::findById($id);
-        View::make('editmessage.html', array('message' => $message));
+        View::make('editmessage.html', array('forum_message' => $message));
     }
     
     public static function update($id, $topic_id) {
         self::checkLoggedIn();
-        self::verifyMembershipByTopicId($topic_id);
+        self::verifyRightsforDeletingOrEditingMessage($id);
         $params = $_POST;
         $attributes = array(
             'id' => $id,
@@ -51,7 +51,7 @@ class MessageController extends BaseController {
     
     public static function delete($id, $topic_id) {
         self::checkLoggedIn();
-        self::verifyMembershipByTopicId($topic_id);
+        self::verifyRightsforDeletingOrEditingMessage($id);
         Message::delete($id);
         Redirect::to('/topics/' . $topic_id);
     }

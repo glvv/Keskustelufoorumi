@@ -2,7 +2,7 @@
 
 class Topic extends BaseModel {
 
-    public $id, $title, $forum_group_id;
+    public $id, $title, $forum_group_id, $creator;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -13,7 +13,8 @@ class Topic extends BaseModel {
         return new Topic(array(
             'id' => $row['id'],
             'title' => $row['title'],
-            'forum_group_id' => $row['forum_group_id']
+            'forum_group_id' => $row['forum_group_id'],
+            'creator' => $row['creator']
         ));
     }
     
@@ -31,8 +32,8 @@ class Topic extends BaseModel {
     }
     
     public function save() {
-        $parameters = array('title' => $this->title, 'forum_group_id' => $this->forum_group_id);
-        $query = 'INSERT INTO Topic (title, forum_group_id) VALUES (:title, :forum_group_id) RETURNING id';
+        $parameters = array('title' => $this->title, 'forum_group_id' => $this->forum_group_id, 'creator' => $this->creator);
+        $query = 'INSERT INTO Topic (title, forum_group_id, creator) VALUES (:title, :forum_group_id, :creator) RETURNING id';
         $row = parent::queryWithParametersLimit1($query, $parameters);
         $this->id = $row['id'];
     }

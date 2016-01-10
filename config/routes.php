@@ -52,8 +52,8 @@ $routes->post('/groups/:group_id/invite', function($group_id) {
     GroupController::invite($group_id);
 });
 
-$routes->get('/groups/:group_id/delete', function($group_id) {
-    GroupController::delete($group_id);
+$routes->post('/groups/:group_id/delete', function($group_id) {
+    GroupController::destroy($group_id);
 });
 
 $routes->get('/topics/:topic_id', function($topic_id) {

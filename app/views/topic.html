@@ -10,10 +10,12 @@
             <td>{{message.author.name}}</td>
             <td>{{message.posted}}</td>
             <td>{{message.message}}</td>
+            {% if (message.author.id == user_logged_in.id or user_logged_in.admin) %}
             <th>
                 {{forms.edit_button("#{base_path}/topics/#{topic.id}/#{message.id}/edit")}}
                 {{forms.destroy_button("#{base_path}/topics/#{topic.id}/#{message.id}/delete")}}
             </th>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

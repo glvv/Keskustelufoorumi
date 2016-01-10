@@ -10,13 +10,10 @@ class Group_Member extends BaseModel {
     }
 
     public static function findGroupByUserId($user_id) {
-        $rows = parent::queryWithParameters('SELECT Forum_Group.id, Forum_Group.name FROM Forum_Group INNER JOIN Group_Member ON Forum_Group.id = Group_Member.forum_group_id WHERE Group_Member.user_id = :user_id', array('user_id' => $user_id));
+        $rows = parent::queryWithParameters('SELECT Forum_Group.id, Forum_Group.name, Forum_Group.creator FROM Forum_Group INNER JOIN Group_Member ON Forum_Group.id = Group_Member.forum_group_id WHERE Group_Member.user_id = :user_id', array('user_id' => $user_id));
         $groups = array();
         foreach ($rows as $row) {
-            $groups[] = new Group(array(
-                'id' => $row['id'],
-                'name' => $row['name']
-            ));
+            $groups[] = Group::createGroupFromResult($row);
         }
         return $groups;
     }

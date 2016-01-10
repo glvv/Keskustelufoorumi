@@ -18,7 +18,6 @@
     <thead>
       <tr>
         <th>Aihe</th>
-        <th></th>
       </tr>
     </thead>
 
@@ -26,10 +25,6 @@
       {% for topic in topics %}
       <tr>
         <td><a href="{{base_path}}/topics/{{topic.id}}">{{topic.title}}</a></td>
-        <th>
-            <a class="btn btn-default btn-sm" href="#">Muokkaa</a>
-            <a class="btn btn-danger btn-sm" href="#">Poista</a>
-        </th>
       </tr>
       {% endfor %}
     </tbody>

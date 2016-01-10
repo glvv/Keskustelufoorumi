@@ -4,10 +4,12 @@ class GroupController extends BaseController {
 
     public static function store() {
         self::checkLoggedIn();
+        $user = self::getUserLoggedIn();
         $params = $_POST;
         $user_id = $_SESSION['user'];
         $group = new Group(array(
-            'name' => $params['name']
+            'name' => $params['name'],
+            'creator' => $user->id
         ));
         $errors = $group->errors();
         $messages;
@@ -23,7 +25,7 @@ class GroupController extends BaseController {
 
     public static function edit($group_id) {
         self::checkLoggedIn();
-        self::verifyMembership($group_id);
+        self::verifyRightsforDeletingOrEditingGroup($group_id);
         $group = Group::findByID($group_id);
         $members = Group_Member::findGroupMembersByGroupId($group_id);
         View::make('editgroup.html', array('members' => $members, 'group' => $group));
@@ -31,14 +33,14 @@ class GroupController extends BaseController {
 
     public static function expel($group_id, $user_id) {
         self::checkLoggedIn();
-        self::verifyMembership($group_id);
+        self::verifyRightsforDeletingOrEditingGroup($group_id);
         Group_Member::delete($group_id, $user_id);
         Redirect::to('/groups/' . $group_id . '/edit', array('message' => 'Jäsen poistettu onnistuneesti'));
     }
 
     public static function invite($group_id) {
         self::checkLoggedIn();
-        self::verifyMembership($group_id);
+        self::verifyRightsforDeletingOrEditingGroup($group_id);
         $params = $_POST;
         $user_id = User::findByName($params['name'])->id;
         $message;
@@ -62,7 +64,7 @@ class GroupController extends BaseController {
 
     public static function update($group_id) {
         self::checkLoggedIn();
-        self::verifyMembership($group_id);
+        self::verifyRightsforDeletingOrEditingGroup($group_id);
         $params = $_POST;
         $group = new Group(array(
             'name' => $params['name'],
@@ -80,7 +82,10 @@ class GroupController extends BaseController {
     }
     
     public static function destroy($group_id) {
-        
+        self::checkLoggedIn();
+        self::verifyRightsforDeletingOrEditingGroup($group_id);
+        Group::delete($group_id);
+        Redirect::to('/', array('message' => 'Ryhmä poistettu onnistuneesti'));
     }
 
 }

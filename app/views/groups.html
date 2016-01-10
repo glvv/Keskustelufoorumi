@@ -25,10 +25,12 @@
             <td>
                 <a href="{{base_path}}/groups/{{group.id}}">{{group.name}}</a>
             </td>
+            {% if (group.creator == user_logged_in.id or user_logged_in.admin) %}
             <th>
                 {{forms.edit_button("#{base_path}/groups/#{group.id}/edit")}}
                 {{forms.destroy_button("#{base_path}/groups/#{group.id}/delete")}}
             </th>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

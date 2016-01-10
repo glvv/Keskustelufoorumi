@@ -2,13 +2,13 @@
 {% block content %}
 <h1>Muokkaa viestiä</h1>
 
-<form method="post" action="{{base_path}}/topics/{{message.topic_id}}/{{message.id}}/edit">
-    <input name="id" value="{{message.id}}" type="hidden">
-    <input name="author" value="{{message.author.id}}" type="hidden">
-    <input name="posted" value="{{message.posted}}" type="hidden">
-    <input name="topic_id" value="{{message.topic_id}}" type="hidden">
+<form method="post" action="{{base_path}}/topics/{{forum_message.topic_id}}/{{forum_message.id}}/edit">
+    <input name="id" value="{{forum_message.id}}" type="hidden">
+    <input name="author" value="{{forum_message.author.id}}" type="hidden">
+    <input name="posted" value="{{forum_message.posted}}" type="hidden">
+    <input name="topic_id" value="{{forum_message.topic_id}}" type="hidden">
     <div class="form-group">
-        <textarea name="message" class="form-control"></textarea>
+        <textarea name="message" class="form-control">{{forum_message.message}}</textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Muokkaa</button>
